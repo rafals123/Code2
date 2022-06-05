@@ -13,6 +13,17 @@ sciezka_bibliotek=/usr/lib
 .o:
 	gcc -o $@ $^
 
+#reguly wzorca
+%.o: %.c
+	gcc -c $<
+	
+lib%.a: %.o
+	ar rs $@ $^
+
+lib%.so: %.o
+	gcc -shared -o $@ $^
+
+
 #pliki obiektowe
 
 objetosc.o: objetosc.c
