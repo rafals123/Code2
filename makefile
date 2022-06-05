@@ -7,6 +7,12 @@
 sciezka_plik=/usr/local/bin
 sciezka_bibliotek=/usr/lib
 
+#reguly przyrostkow
+.c.o:
+	gcc -c $^
+.o:
+	gcc -o $@ $^
+
 #pliki obiektowe
 
 objetosc.o: objetosc.c
