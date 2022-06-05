@@ -2,7 +2,10 @@
 .SUFFIXES: .c .o .h .so .a
 
 
+#ZMIENNE PRZECHOWUJACE SCIEZKE DO KATALOGOW SYSTEMOWYCH (instalacja programu Code2)
 
+sciezka_plik=/usr/local/bin
+sciezka_bibliotek=/usr/lib
 
 #pliki obiektowe
 
@@ -18,16 +21,16 @@ main.o: main.c
 
 #Biblioteka statyczna - obliczanie pola
 libpole.a: pole.o
-	ar rs libpole.a pole.o
+	ar rs $@ $^
 
 #Biblioteka dynamiczna - obliczanie objetosci
 libobjetosc.so: objetosc.o
-	gcc -shared -o libobjetosc.so objetosc.o
+	gcc -shared -o $@ $^
 	
 #plik wykonywalny
 
 Code2: main.o libpole.a libobjetosc.so
-	gcc -o Code2 main.o libpole.a libobjetosc.so
+	gcc -o $@ $^
 	
 	
 
@@ -36,13 +39,13 @@ Code2: main.o libpole.a libobjetosc.so
 install: Code2
 	#nadanie uprawnien
 	sudo chmod 777 Code2 
-	sudo cp Code2 /usr/local/bin
-	sudo cp libobjetosc.so /usr/lib
-	sudo cp libpole.a /usr/lib
+	sudo cp Code2 $(sciezka_plik)
+	sudo cp libobjetosc.so $(sciezka_bibliotek)
+	sudo cp libpole.a $(sciezka_bibliotek)
 	
 clean:
 	rm -f *o *.a *.so Code2
-	sudo rm -f /usr/local/bin/Code2
-	sudo rm -f /usr/lib/libobjetosc.so
-	sudo rm -f /usr/lib/libpole.a
+	sudo rm -f $(sciezka_plik)/Code2
+	sudo rm -f $(sciezka_bibliotek)/libobjetosc.so
+	sudo rm -f $(sciezka_bibliotek)/libpole.a
 	
